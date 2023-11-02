@@ -10,8 +10,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import java.util.List;
-import java.util.Map;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.*;
 
 public abstract class BasePage {
 
@@ -163,7 +167,83 @@ public abstract class BasePage {
         }
     }
 
+    /**
+     * Method returns a List of broken URLs and their respective Status Codes from a specified Webpage in the method's parameter.
+     *
+     * @param pageName
+     * @return
+     */
+    public Map<String, Integer> sendHttpReqToAllLinks(String pageName, String requestType) {
+        requestType = requestType.toUpperCase();
+        pagesInfoList = excelUtil.getDataList();// Reading from pages info exel sheet, such as: pageName, pageTitle, pageUrl.
+        //Getting the page URL based on the specified name of the page in the method parameter.
+        // If page name from exel sheet is equal to name of the page that we want to be on to check broken links(page name from parameter), then command the driver to go to that page.
+        String webpageURL = "";
+        for (Map<String, String> eachMap : pagesInfoList) {
+            if (eachMap.get("pageName").equalsIgnoreCase(pageName)) {
+                webpageURL = eachMap.get("pageUrl");
+            }
+        }
 
+        //Map to store all links and status codes that the Http request was sent to.
+        Map<String, Integer> allLinksAndStatusCodesFromPage = new HashMap<>();
+
+        //Iterating through all the links found on the specified web page.
+        Iterator<WebElement> it = getAllLinksList().iterator();
+        while (it.hasNext()) {
+            String url = it.next().getAttribute("href");// storing each link in a String variable.
+//            System.out.println(url);
+            if (url == null || url.isEmpty()) {// Checking if iterated URL is null or empty to disregard.
+                //System.out.println("URL is either not configured for anchor tag or it is empty");
+                continue;
+            }
+            if (!url.startsWith(webpageURL)) {// Checking if iterated URL is part of the same specified web page/domain. Will skip it if it is not.
+                //System.out.println("URL belongs to another domain. Skipping it.");
+                continue;
+            }
+            try {
+                HttpURLConnection huc = (HttpURLConnection) (new URL(url).openConnection());// Opening the Http connection.
+                huc.setRequestMethod(requestType);// Setting up the "HEAD" method because we'll only get the headers and not the response.
+                huc.connect();// Establishing the connection.
+                int responseCode = huc.getResponseCode();// Getting the response code.
+                allLinksAndStatusCodesFromPage.put(url, responseCode);
+            } catch (MalformedURLException e) {// Handling exceptions if the iterated URLs are not valid/are broken.
+                e.printStackTrace();
+            } catch (IOException e) {// Parent of MalformedURLException exception.
+                e.printStackTrace();
+            }
+        }
+        return allLinksAndStatusCodesFromPage;
+    }
+
+    /**
+     * Method returns a list of all links from a page the user is currently on.
+     *
+     * @return
+     */
+    public List<WebElement> getAllLinksList() {
+
+        return Driver.getDriver().findElements(By.tagName("a"));
+    }
+
+    /**
+     * Method switches to new window if a new window is opened.
+     * Method doesn't take any parameters.
+     */
+    public void switchToNewWindow() {
+        Set<String> winHandles = Driver.getDriver().getWindowHandles();
+
+        if (winHandles.size() > 1) {
+            for (String eachWinHandle : winHandles) {
+                Driver.getDriver().switchTo().window(eachWinHandle);
+            }
+        }
+        if (winHandles.size() > 1) {
+            System.out.println("User successfully moved to a new window.");
+        } else {
+            System.out.println("User is still in the same window");
+        }
+    }
 
 
     /**

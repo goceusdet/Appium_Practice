@@ -88,6 +88,7 @@ public class ContactSalesRepStepDeff {
     public void userIsOnANavigationMenuWindow(String navWin) {
         homePage.clickOnHamburgerMenuBtn();
         homePage.getHamburgerMenuElement(navWin).click();
+        homePage.switchToNewWindow();
         BrowserUtil.waitForPageToLoad(7);
     }
 
