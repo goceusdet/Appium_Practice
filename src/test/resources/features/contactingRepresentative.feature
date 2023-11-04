@@ -80,10 +80,10 @@ Feature: CONTACTING SALES REPRESENTATIVES
     And user is on a "Contact" navigation menu window
     And user clicks on "North America" continent
     And user clicks on "<buttonType>" LEARN MORE button
-    And user is on "<pageName>" page again
+    Then user is on "<pageName>" page again
     And user fills out form "<first name>" "<last name>" "<hospital/organization>" "<title/specialty>" "<email address>" "<phone number>" "<country>" "<city>" "<state>" "<zipcode>" "<message>"
     #And user clicks "submit" button
-    Then user should see "Thank you! We have received your request. A Stryker representative will be in contact with you soon." message
+    And user should see "Thank you! We have received your request. A Stryker representative will be in contact with you soon." message
 
     Examples:
       | itemType          | itemName                       | contactButton     | pageName       | buttonType      | first name | last name | hospital/organization | title/specialty               | email address                | phone number | country   | city    | state | zipcode | message                                                                                               |

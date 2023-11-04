@@ -67,7 +67,7 @@ public class ContactSalesRepStepDeff {
         //Mock test. Input will not be sent.
     }
 
-    @Then("user should see {string} message")
+    @And("user should see {string} message")
     public void userShouldSeeMessage(String message) {
         //Mock test
         //Second case needs to fail as user gets first case[positive] message when conducting negative test.
@@ -109,7 +109,7 @@ public class ContactSalesRepStepDeff {
         BrowserUtil.waitForPageToLoad(5);
     }
 
-    @And("user is on {string} page again")
+    @Then("user is on {string} page again")
     public void userIsOnPageAgain(String pageName) {
         String expectedPageTitle = homePage.getPageTitleFromSheet(pageName);
         assertEquals(expectedPageTitle, actualPageTitle);
