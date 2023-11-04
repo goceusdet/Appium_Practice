@@ -9,6 +9,7 @@ Feature: CONTACTING SALES REPRESENTATIVES
   Scenario Outline: Verify user can contact sales representative with all valid input data from Medical And Surgical Equipment module
     #Given user is on "stryker" page (this is handled by custom @ui hook in Hooks class)
     When user clicks on "medical and surgical equipment" menu element
+    And user clicks on "All product categories" menu option
     And user clicks on "surgical visualization" equipment
     And user is on "surgicalVisualization" page
     And user clicks on "<itemType>" type item "<itemName>"
@@ -29,6 +30,7 @@ Feature: CONTACTING SALES REPRESENTATIVES
   Scenario Outline: Verify user can not contact different sales representatives from Medical And Surgical Equipment module by entering invalid zipcode
     #Given user is on "stryker" page (this is handled by custom @ui hook in Hooks class)
     When user clicks on "medical and surgical equipment" menu element
+    And user clicks on "All product categories" menu option
     And user clicks on "surgical visualization" equipment
     And user is on "surgicalVisualization" page
     And user clicks on "<itemType>" type item "<itemName>"
@@ -49,6 +51,7 @@ Feature: CONTACTING SALES REPRESENTATIVES
   Scenario Outline: Verify user can not contact different sales representatives by submitting an empty form
     #Given user is on "stryker" page (this is handled by custom @ui hook in Hooks class)
     When user clicks on "medical and surgical equipment" menu element
+    And user clicks on "All product categories" menu option
     And user clicks on "surgical visualization" equipment
     And user is on "surgicalVisualization" page
     And user clicks on "<itemType>" type item "<itemName>"
@@ -68,6 +71,7 @@ Feature: CONTACTING SALES REPRESENTATIVES
   Scenario Outline: Verify user can contact sales representatives from Contact module
     #Given user is on "stryker" page (this is handled by custom @ui hook in Hooks class)
     When user clicks on "medical and surgical equipment" menu element
+    And user clicks on "All product categories" menu option
     And user clicks on "surgical visualization" equipment
     And user is on "surgicalVisualization" page
     And user clicks on "<itemType>" type item "<itemName>"
@@ -76,7 +80,7 @@ Feature: CONTACTING SALES REPRESENTATIVES
     And user is on a "Contact" navigation menu window
     And user clicks on "North America" continent
     And user clicks on "<buttonType>" LEARN MORE button
-    And user is on "<pageName>" page
+    And user is on "<pageName>" page again
     And user fills out form "<first name>" "<last name>" "<hospital/organization>" "<title/specialty>" "<email address>" "<phone number>" "<country>" "<city>" "<state>" "<zipcode>" "<message>"
     #And user clicks "submit" button
     Then user should see "Thank you! We have received your request. A Stryker representative will be in contact with you soon." message

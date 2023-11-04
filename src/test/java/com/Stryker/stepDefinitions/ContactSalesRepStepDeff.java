@@ -15,9 +15,11 @@ import static org.junit.Assert.assertEquals;
 
 public class ContactSalesRepStepDeff {
 
+    String actualPageTitle;
     HomePage homePage = new HomePage();
     ContactPage contactPage = new ContactPage();
     EndoscopyPage endoscopyPage = new EndoscopyPage();
+
     HD3ChipCamSystemPage hd3ChipCamSystemPage = new HD3ChipCamSystemPage();
     SurgicalVisualizationPage surgicalVisualization = new SurgicalVisualizationPage();
 
@@ -43,7 +45,7 @@ public class ContactSalesRepStepDeff {
     @And("user is on {string} page")
     public void userIsOnPage(String pageName) {
         String expectedPageTitle = homePage.getPageTitleFromSheet(pageName);
-        String actualPageTitle = Driver.getDriver().getTitle();
+        actualPageTitle = Driver.getDriver().getTitle();
         assertEquals(expectedPageTitle, actualPageTitle);
     }
 
@@ -88,7 +90,6 @@ public class ContactSalesRepStepDeff {
     public void userIsOnANavigationMenuWindow(String navWin) {
         homePage.clickOnHamburgerMenuBtn();
         homePage.getHamburgerMenuElement(navWin).click();
-        homePage.switchToNewWindow();
         BrowserUtil.waitForPageToLoad(7);
     }
 
@@ -100,5 +101,17 @@ public class ContactSalesRepStepDeff {
     @And("user clicks on {string} LEARN MORE button")
     public void userClicksOnLEARNMOREButton(String buttonType) {
         contactPage.learnMoreButton(buttonType).click();
+    }
+
+    @And("user clicks on {string} menu option")
+    public void userClicksOn(String  menuOption) {
+        homePage.getMedAndSurgEqMenuOption(menuOption).click();
+        BrowserUtil.waitForPageToLoad(5);
+    }
+
+    @And("user is on {string} page again")
+    public void userIsOnPageAgain(String pageName) {
+        String expectedPageTitle = homePage.getPageTitleFromSheet(pageName);
+        assertEquals(expectedPageTitle, actualPageTitle);
     }
 }

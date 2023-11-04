@@ -3,7 +3,9 @@ package com.Stryker.pages;
 import com.Stryker.utils.BrowserUtil;
 import com.Stryker.utils.Driver;
 import com.Stryker.utils.ExcelUtil;
+
 import static org.junit.Assert.*;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -148,6 +150,7 @@ public abstract class BasePage {
 
     /**
      * Method handles cookies based on pop up.
+     *
      * @param action
      */
     public static void cookieHandling(String action) {
@@ -257,13 +260,17 @@ public abstract class BasePage {
         js = (JavascriptExecutor) Driver.getDriver();
         equipmentName = equipmentName.toLowerCase().replace(' ', '-');
 
-        WebElement medAndSurgEquip = Driver.getDriver().findElement(By.xpath("//div[@class='products-container']//a[contains(@href, '"+equipmentName+"')]"));
+        WebElement medAndSurgEquip = Driver.getDriver().findElement(By.xpath("//div[@class='products-container']//a[contains(@href, '" + equipmentName + "')]"));
         js.executeScript("arguments[0].scrollIntoView(true)", medAndSurgEquip);
 //        actions = new Actions(Driver.getDriver());
 //        actions.moveToElement(medAndSurgEquip);
 
         BrowserUtil.waitForClickablility(medAndSurgEquip, 5);
         return medAndSurgEquip;
+    }
+
+    public WebElement getMedAndSurgEqMenuOption(String menuOption) {
+        return Driver.getDriver().findElement(By.xpath("//a[.='" + menuOption + "']"));
     }
 
     @FindBy(xpath = "//div[@id='ot-sdk-btn-floating']")
