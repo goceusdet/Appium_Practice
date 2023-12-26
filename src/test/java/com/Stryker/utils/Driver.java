@@ -1,27 +1,13 @@
 package com.Stryker.utils;
 
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileElement;
+
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidElement;
-import io.appium.java_client.android.AndroidOptions;
 import io.appium.java_client.remote.MobileCapabilityType;
-import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.remote.RemoteWebDriverBuilder;
-import org.openqa.selenium.remote.http.HttpClient;
-
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 public class Driver {
@@ -44,7 +30,7 @@ public class Driver {
                     caps.setCapability(MobileCapabilityType.DEVICE_NAME, "Pixel 3");
                     caps.setCapability(MobileCapabilityType.BROWSER_NAME, "Chrome");
                     caps.setCapability(MobileCapabilityType.UDID, "emulator-5554");
-                    caps.setCapability("chromedriverExecutable", "D:/IT/JAVA Projects/MyProject_Android_Automation/chromedriver.exe");
+                    caps.setCapability("chromedriverExecutable", "C:/Users/MTRPE/OneDrive/Desktop/JAVA Projects/Appium_Practice/chromedriver1.exe");
 
                     try {
                         driver = new AndroidDriver<>(new URL("http://localhost:4723/wd/hub"), caps);

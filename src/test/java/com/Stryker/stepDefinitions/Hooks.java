@@ -1,9 +1,11 @@
 package com.Stryker.stepDefinitions;
 
 
+import com.Stryker.utils.ConfigurationReader;
 import com.Stryker.utils.DB_Util;
 import com.Stryker.utils.Driver;
 import com.Stryker.utils.Environment;
+import com.github.dockerjava.core.dockerfile.DockerfileStatement;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
@@ -18,10 +20,10 @@ public class Hooks {
     /**
      * @Before will be executed automatically before EVERY scenario in the project.
      */
-    @Before("@ui")
+    @Before()
     public void setupMethod(){
         System.out.println("this is coming from BEFORE");
-        Driver.getDriver().get("https://www.stryker.com/us/en/index.html");
+        Driver.getDriver().get(Environment.URL);
         Driver.getDriver().manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
     }
 
@@ -29,7 +31,7 @@ public class Hooks {
      * @param scenario
      * @After will be executed automatically after EVERY scenario in the project.
      */
-    @After("@ui")
+    @After()
     public void teardownMethod(Scenario scenario) {
 
         if (scenario.isFailed()) {
